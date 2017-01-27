@@ -2,6 +2,7 @@ package com.dotcms.rekognition.actionlet;
 
 
 import com.dotcms.rekognition.api.RekognitionApi;
+import com.dotcms.rekognition.util.AWSPropertyBundle;
 import com.dotmarketing.business.APILocator;
 import com.dotmarketing.exception.DotDataException;
 import com.dotmarketing.exception.DotSecurityException;
@@ -18,6 +19,7 @@ import com.dotmarketing.util.UtilMethods;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +33,11 @@ public class RekognitionActionlet extends WorkFlowActionlet {
 
   @Override
   public List<WorkflowActionletParameter> getParameters() {
-    return null;
+      List<WorkflowActionletParameter> params = new ArrayList<WorkflowActionletParameter>();
+
+      params.add(new WorkflowActionletParameter("maxLabels", "Max Labels", AWSPropertyBundle.getProperty("max.labels", "15"), true));
+      params.add(new WorkflowActionletParameter("minConfidence", "Minimum Confidence (percent)", AWSPropertyBundle.getProperty("min.confidence", "75"), true));
+      return params;
   }
 
   @Override
@@ -82,7 +88,7 @@ public class RekognitionActionlet extends WorkFlowActionlet {
       }
 
     }
-
+    
 
 
     try {
@@ -90,7 +96,16 @@ public class RekognitionActionlet extends WorkFlowActionlet {
       if (tags.contains(TAGGED_BY_AWS))
         return;
 
-      List<String> awsTags = new RekognitionApi().detectLabels(image);
+      float minConfidence = Float.parseFloat(params.get("minConfidence").getValue() + "F");
+      int maxLabels = Integer.parseInt(params.get("maxLabels").getValue());
+      
+
+
+      List<String> awsTags = new RekognitionApi().detectLabels(image, maxLabels, minConfidence);
+      
+      
+      
+      
       awsTags.add(TAGGED_BY_AWS);
       for (String tag : awsTags) {
         tapi.addContentletTagInode(tag, con.getInode(), con.getHost(), tagField.getVelocityVarName());

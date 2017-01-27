@@ -32,15 +32,13 @@ public class RekognitionApi {
     this.awsCredentials = credentials();
     this.client = new AmazonRekognitionClient(this.awsCredentials);
     this.maxLabels = Integer.parseInt(AWSPropertyBundle.getProperty("max.labels", "15"));
-    this.minConfidence = Float.parseFloat(AWSPropertyBundle.getProperty("min.confidence", "75F"));
+    this.minConfidence = Float.parseFloat(AWSPropertyBundle.getProperty("min.confidence", "75"));
 
   }
 
-
-
-  public List<String> detectLabels(File file) {
+  public List<String> detectLabels(File file, int maxLabels, float minConfidence) {
     try {
-      return _detectLabels(file);
+      return _detectLabels(file, maxLabels, minConfidence);
     } catch (Exception e) {
       throw new DotStateException(e.getMessage(), e);
     }
@@ -48,7 +46,17 @@ public class RekognitionApi {
   }
 
 
-  private List<String> _detectLabels(File file) throws IOException {
+  public List<String> detectLabels(File file) {
+    try {
+      return _detectLabels(file, maxLabels, minConfidence);
+    } catch (Exception e) {
+      throw new DotStateException(e.getMessage(), e);
+    }
+
+  }
+
+
+  private List<String> _detectLabels(File file, int maxLabels, float minConfidence) throws IOException {
 
 
 
