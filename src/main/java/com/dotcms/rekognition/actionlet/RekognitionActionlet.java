@@ -44,12 +44,12 @@ public class RekognitionActionlet extends WorkFlowActionlet {
 
   @Override
   public String getName() {
-    return "Rekognition Actionlet";
+    return "Auto Tag Images - AWS";
   }
 
   @Override
   public String getHowTo() {
-    return null;
+    return "Max Labels is the maximum number of labels you are looking to return and Minimum Confidence is the minimum confidence level you will accept as valid tags";
   }
 
 
