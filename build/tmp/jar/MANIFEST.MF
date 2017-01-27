@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Bundle-Description: dotCMS Rekognition Actionlet
+Bundle-SymbolicName: com.dotcms.rekognition.actionlet
+Bundle-ManifestVersion: 2
+Bnd-LastModified: 1485477485000
+Bundle-DocURL: https://dotcms.com
+Bundle-Vendor: dotcms
+Import-Package: com.amazonaws.auth;version=0,com.amazonaws.services.re
+ kognition;version=0,com.amazonaws.services.rekognition.model;version=
+ 0,com.dotcms.repackage.org.osgi.framework;version=0,com.dotmarketing.
+ business;version=0,com.dotmarketing.exception;version=0,com.dotmarket
+ ing.osgi;version=0,com.dotmarketing.portlets.contentlet.business;vers
+ ion=0,com.dotmarketing.portlets.contentlet.model;version=0,com.dotmar
+ keting.portlets.structure.model;version=0,com.dotmarketing.portlets.w
+ orkflows.actionlet;version=0,com.dotmarketing.portlets.workflows.mode
+ l;version=0,com.dotmarketing.tag.business;version=0,com.dotmarketing.
+ tag.model;version=0,com.dotmarketing.util;version=0,org.junit;version
+ =0
+DynamicImport-Package: *
+Tool: Bnd-2.1.0.20130426-122213
+Export-Package: com.dotcms.rekognition.actionlet;version="0.1";uses:="
+ com.dotcms.repackage.org.osgi.framework,com.dotmarketing.osgi,com.dot
+ marketing.portlets.workflows.actionlet,com.dotmarketing.portlets.work
+ flows.model",com.dotcms.rekognition.api;version="0.1",com.dotcms.reko
+ gnition.test;version="0.1";uses:="org.junit",com.dotcms.rekognition.u
+ til;version="0.1"
+Bundle-Name: Rekognition Actionlet
+Bundle-Version: 0.1
+Bundle-Activator: com.dotcms.rekognition.actionlet.Activator
+Created-By: 1.8.0_112 (Oracle Corporation)
+
