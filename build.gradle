@@ -36,7 +36,7 @@ Bundle-SymbolicName: fragment.rekognition.extra.packages
 Bundle-Version: 1.0
 Bundle-Description: Bundle exporting 3rdparty rekognition libs
 Fragment-Host: system.bundle; extension:=framework
-Export-Package: com.dotmarketing.portlets.contentlet.business,com.dotcms.repackage.org.osgi.framework,com.dotmarketing.osgi,com.dotmarketing.business,com.dotmarketing.exception,com.dotmarketing.portlets.contentlet.model,com.dotmarketing.portlets.structure.model,com.dotmarketing.portlets.workflows.actionlet,com.dotmarketing.portlets.workflows.model,com.dotmarketing.tag.business,org.junit,com.dotmarketing.tag.model,com.dotmarketing.util,com.dotmarketing.business
+Export-Package: com.dotmarketing.image.filter,com.dotmarketing.portlets.contentlet.business,com.dotcms.repackage.org.osgi.framework,com.dotmarketing.osgi,com.dotmarketing.business,com.dotmarketing.exception,com.dotmarketing.portlets.contentlet.model,com.dotmarketing.portlets.structure.model,com.dotmarketing.portlets.workflows.actionlet,com.dotmarketing.portlets.workflows.model,com.dotmarketing.tag.business,org.junit,com.dotmarketing.tag.model,com.dotmarketing.util,com.dotmarketing.business
 '''
 		new File(tmpPath + "/META-INF/MANIFEST.MF").write(exportFragmentStr)
 	}

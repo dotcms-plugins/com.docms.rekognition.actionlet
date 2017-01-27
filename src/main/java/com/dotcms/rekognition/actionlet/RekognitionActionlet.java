@@ -6,6 +6,7 @@ import com.dotcms.rekognition.util.AWSPropertyBundle;
 import com.dotmarketing.business.APILocator;
 import com.dotmarketing.exception.DotDataException;
 import com.dotmarketing.exception.DotSecurityException;
+import com.dotmarketing.image.filter.ResizeImageFilter;
 import com.dotmarketing.portlets.contentlet.model.Contentlet;
 import com.dotmarketing.portlets.structure.model.Field;
 import com.dotmarketing.portlets.workflows.actionlet.WorkFlowActionlet;
@@ -20,6 +21,7 @@ import com.dotmarketing.util.UtilMethods;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -77,7 +79,7 @@ public class RekognitionActionlet extends WorkFlowActionlet {
       if ("binary".equals(f.getFieldType())) {
         try {
           image = con.getBinary(f.getVelocityVarName());
-
+    
           if (UtilMethods.isImage(image.getAbsolutePath())) {
           } else {
             return;
@@ -93,14 +95,25 @@ public class RekognitionActionlet extends WorkFlowActionlet {
 
     try {
       List<Tag> tags = tapi.getTagsByInode(con.getInode());
-      if (tags.contains(TAGGED_BY_AWS))
+      if (tags.contains(TAGGED_BY_AWS)){
         return;
-
-      float minConfidence = Float.parseFloat(params.get("minConfidence").getValue() + "F");
+      }
+      
+      String min = params.get("minConfidence").getValue();
+      
+      
+      float minConfidence = Float.parseFloat(min );
       int maxLabels = Integer.parseInt(params.get("maxLabels").getValue());
       
 
 
+      if(image.length() > 5242879){
+        Map<String, String[]> args = new HashMap<>();
+        args.put("resize_w", new String[]{"1000"});
+        image =  new ResizeImageFilter().runFilter(image, args);
+      }
+      
+      
       List<String> awsTags = new RekognitionApi().detectLabels(image, maxLabels, minConfidence);
       
       

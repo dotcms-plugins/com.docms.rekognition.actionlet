@@ -68,7 +68,10 @@ public class RekognitionApi {
       Image image = new Image().withBytes(buffer);
 
       DetectLabelsRequest request =
-          new DetectLabelsRequest().withImage(image).withMaxLabels(maxLabels).withMinConfidence(minConfidence);
+          new DetectLabelsRequest()
+          .withImage(image)
+          .withMaxLabels(maxLabels)
+          .withMinConfidence(minConfidence);
 
       DetectLabelsResult result = client.detectLabels(request);
       buffer.clear();
