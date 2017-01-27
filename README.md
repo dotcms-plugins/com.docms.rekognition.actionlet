@@ -4,7 +4,7 @@ This OSGi plugin provides support for Amazon's Rekognition AI engine to automati
 
 In order to use this workflow action, you will need access to amazon's AWS.  The AWS key and secret can be changed in the aws-rekog.properties file found under src/main/resources
 
-
+```
 #REKOGNITION
 aws.key=12341234
 aws.secret=12341234
@@ -12,7 +12,7 @@ aws.secret=12341234
 #defaults
 max.labels=20
 min.confidence=77
-
+```
 
 
 ## Examples
