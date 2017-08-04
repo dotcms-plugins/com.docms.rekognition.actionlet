@@ -13,6 +13,11 @@ public class Activator extends GenericBundleActivator {
 
         //Registering the test Actionlet
         registerActionlet( bundleContext, new RekognitionActionlet() );
+        System.out.println("");
+        System.out.println("");
+        System.out.println("Starting ");
+        System.out.println("");
+        System.out.println("");
     }
 
     @Override

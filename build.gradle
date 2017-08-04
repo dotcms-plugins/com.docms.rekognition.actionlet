@@ -16,44 +16,12 @@ configurations {
     osgiLibs
 }
 
-def tmpPath = "build/tmp/fragment"
-
-task mani{
-
-    doLast {
-        new File( tmpPath + "/META-INF").mkdirs()
-    
-        def exportFragmentStr = '''\
-Bundle-ManifestVersion: 2
-Bundle-Name: System extra packages
-Bundle-SymbolicName: fragment.rekognition.extra.packages
-Bundle-Version: 1.0
-Bundle-Description: Bundle exporting 3rdparty rekognition libs
-Fragment-Host: system.bundle; extension:=framework
-Export-Package: com.dotmarketing.image.filter,com.dotmarketing.portlets.contentlet.business,com.dotcms.repackage.org.osgi.framework,com.dotmarketing.osgi,com.dotmarketing.business,com.dotmarketing.exception,com.dotmarketing.portlets.contentlet.model,com.dotmarketing.portlets.structure.model,com.dotmarketing.portlets.workflows.actionlet,com.dotmarketing.portlets.workflows.model,com.dotmarketing.tag.business,org.junit,com.dotmarketing.tag.model,com.dotmarketing.util,com.dotmarketing.business
-'''
-        new File(tmpPath + "/META-INF/MANIFEST.MF").write(exportFragmentStr)
-    }
-}
-
-
-
-task fragment(type: Zip, dependsOn: mani) {
-    new File("build/libs").mkdirs()
-    from tmpPath
-    include '*'
-    include '*/*' //to include contents of a folder present inside Reports directory
-    archiveName 'rekognition-exports-fragment.jar'
-    destinationDir(file('build/libs'))
-}
-
-
 
 dependencies {
-    compile 'com.amazonaws:aws-java-sdk-rekognition:1.11.84'
+    compile  ('com.amazonaws:aws-java-sdk-rekognition:1.11.172')
     compile ('com.dotcms:dotcms:4.1.1'){ transitive = true }
     compile 'junit:junit:4.12'
-    osgiLibs 'com.amazonaws:aws-java-sdk-rekognition:1.11.84'
+    osgiLibs ('com.amazonaws:aws-java-sdk-rekognition:1.11.172')
 }
 
 
@@ -66,7 +34,20 @@ task copyToLib(type: Copy) {
 jar {
     manifest {
         attributes (
-            'Bundle-Activator': 'com.dotcms.rekognition.actionlet.Activator',
+                'Bundle-Activator': 'com.dotcms.rekognition.actionlet.Activator',
+
+                'Import-Package' :  '''
+                                    com.dotmarketing.*,
+                                    com.dotcms.contenttype.model.type,
+                                    com.dotcms.contenttype.model.field,
+                                    com.dotcms.contenttype.business
+                                    ''',
+                'Export-Package' : '''
+                                    com.amazonaws.*,
+                                    org.apache.commons.*,
+
+                                    '''
+                
         )
     }
 }
