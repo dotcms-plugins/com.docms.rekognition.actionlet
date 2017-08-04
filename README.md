@@ -8,8 +8,16 @@ In order to use this workflow action, you will need access to amazon's AWS.  The
 #REKOGNITION
 aws.key=12341234
 aws.secret=12341234
+
+#defaults
 max.labels=20
 min.confidence=77
 ```
 
 
+## Examples
+![screen shot 2017-01-27 at 11 24 57 am](https://cloud.githubusercontent.com/assets/934364/22378718/8e1aa132-e484-11e6-8d45-0d896ac32d16.png)
+---
+![screen shot 2017-01-27 at 11 04 57 am](https://cloud.githubusercontent.com/assets/934364/22378725/90ca0e0e-e484-11e6-9207-27e00b5abea8.png)
+---
+![screen shot 2017-01-27 at 11 28 06 am](https://cloud.githubusercontent.com/assets/934364/22378730/92886f9c-e484-11e6-9f6c-0c0b21344e92.png)
