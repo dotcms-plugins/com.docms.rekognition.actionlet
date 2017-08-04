@@ -9,28 +9,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.rekognition.AmazonRekognitionClient;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.rekognition.AmazonRekognition;
+import com.amazonaws.services.rekognition.AmazonRekognitionClientBuilder;
 import com.amazonaws.services.rekognition.model.DetectLabelsRequest;
 import com.amazonaws.services.rekognition.model.DetectLabelsResult;
 import com.amazonaws.services.rekognition.model.Image;
 import com.amazonaws.services.rekognition.model.Label;
 import com.dotcms.rekognition.util.AWSPropertyBundle;
 import com.dotmarketing.business.DotStateException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RekognitionApi {
 
 
   private final AWSCredentials awsCredentials;
-  private final AmazonRekognitionClient client;
+  private final AmazonRekognition client;
   private final float minConfidence;
   private final int maxLabels;
 
   public RekognitionApi() {
 
     this.awsCredentials = credentials();
-    this.client = new AmazonRekognitionClient(this.awsCredentials);
+    
+    this.client = AmazonRekognitionClientBuilder
+                    .standard()
+                    .withRegion(Regions.US_WEST_2)
+                    .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+                    .build();
+    
+
     this.maxLabels = Integer.parseInt(AWSPropertyBundle.getProperty("max.labels", "15"));
     this.minConfidence = Float.parseFloat(AWSPropertyBundle.getProperty("min.confidence", "75"));
 

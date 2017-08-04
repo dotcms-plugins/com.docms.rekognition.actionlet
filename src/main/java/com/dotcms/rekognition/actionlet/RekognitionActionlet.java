@@ -1,6 +1,16 @@
 package com.dotcms.rekognition.actionlet;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.dotcms.contenttype.model.field.BinaryField;
+import com.dotcms.contenttype.model.field.Field;
+import com.dotcms.contenttype.model.field.TagField;
 import com.dotcms.rekognition.api.RekognitionApi;
 import com.dotcms.rekognition.util.AWSPropertyBundle;
 import com.dotmarketing.business.APILocator;
@@ -8,7 +18,6 @@ import com.dotmarketing.exception.DotDataException;
 import com.dotmarketing.exception.DotSecurityException;
 import com.dotmarketing.image.filter.ResizeImageFilter;
 import com.dotmarketing.portlets.contentlet.model.Contentlet;
-import com.dotmarketing.portlets.structure.model.Field;
 import com.dotmarketing.portlets.workflows.actionlet.WorkFlowActionlet;
 import com.dotmarketing.portlets.workflows.model.WorkflowActionClassParameter;
 import com.dotmarketing.portlets.workflows.model.WorkflowActionFailureException;
@@ -17,13 +26,6 @@ import com.dotmarketing.portlets.workflows.model.WorkflowProcessor;
 import com.dotmarketing.tag.business.TagAPI;
 import com.dotmarketing.tag.model.Tag;
 import com.dotmarketing.util.UtilMethods;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class RekognitionActionlet extends WorkFlowActionlet {
 
@@ -64,10 +66,19 @@ public class RekognitionActionlet extends WorkFlowActionlet {
     Field tagField = null;
     File image = null;
     TagAPI tapi = APILocator.getTagAPI();
-
-    for (Field f : con.getStructure().getFields()) {
-      if (f.getFieldType().equals(Field.FieldType.TAG.toString())) {
+    List<Field> fields;
+    try {
+        fields = APILocator.getContentTypeAPI(processor.getUser()).find(con.getContentTypeId()).fields();
+    } catch (DotDataException | DotSecurityException e1) {
+        throw new WorkflowActionFailureException("unable to get fields" , e1);
+    }
+    
+    
+    
+    for (Field f : fields) {
+      if (f instanceof TagField) {
         tagField = f;
+        break;
       }
     }
     if (tagField == null) {
@@ -75,12 +86,13 @@ public class RekognitionActionlet extends WorkFlowActionlet {
     }
 
 
-    for (Field f : con.getStructure().getFields()) {
-      if ("binary".equals(f.getFieldType())) {
+    for (Field f : fields) {
+      if (f instanceof BinaryField) {
         try {
-          image = con.getBinary(f.getVelocityVarName());
-    
+          image = con.getBinary(f.variable());
+         
           if (UtilMethods.isImage(image.getAbsolutePath())) {
+              break;
           } else {
             return;
           }
@@ -121,7 +133,7 @@ public class RekognitionActionlet extends WorkFlowActionlet {
       
       awsTags.add(TAGGED_BY_AWS);
       for (String tag : awsTags) {
-        tapi.addContentletTagInode(tag, con.getInode(), con.getHost(), tagField.getVelocityVarName());
+        tapi.addContentletTagInode(tag, con.getInode(), con.getHost(), tagField.variable());
       }
 
       APILocator.getContentletAPI().refresh(con);
