@@ -49,7 +49,6 @@ jar {
                                     javax.naming.*,
                                     javax.security.*
                                     ''',
-                'Include-Resource': 'libs',
                 'Bundle-ClassPath' :'''
                                     .,
                                     libs/aws-java-sdk-core-1.11.84.jar,
