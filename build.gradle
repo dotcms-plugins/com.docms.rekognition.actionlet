@@ -22,6 +22,7 @@ dependencies {
     compile ('com.dotcms:dotcms:4.1.1'){ transitive = true }
     compile 'junit:junit:4.12'
     osgiLibs ('com.amazonaws:aws-java-sdk-rekognition:1.11.84')
+    osgiLibs ('log4j:log4j:1.2.17')
 }
 
 
@@ -40,13 +41,35 @@ jar {
                                     com.dotmarketing.*,
                                     com.dotcms.contenttype.model.type,
                                     com.dotcms.contenttype.model.field,
-                                    com.dotcms.contenttype.business
+                                    com.dotcms.contenttype.business,
+                                    javax.net.ssl,
+                                    javax.management,
+                                    javax.crypto.*,
+                                    javax.net.*,
+                                    javax.naming.*,
+                                    javax.security.*
                                     ''',
-                'Export-Package' : '''
-                                    com.amazonaws.*,
-                                    org.apache.commons.*,
 
-                                    '''
+                'Bundle-ClassPath' :'''
+                                    .,
+                                    libs/aws-java-sdk-core-1.11.84.jar,
+                                    libs/httpcore-4.4.4.jar,
+                                    libs/jackson-dataformat-cbor-2.6.6.jar,
+                                    libs/aws-java-sdk-rekognition-1.11.84.jar,
+                                    libs/ion-java-1.0.1.jar,
+                                    libs/jmespath-java-1.11.84.jar,
+                                    libs/commons-codec-1.9.jar,
+                                    libs/jackson-annotations-2.6.0.jar,
+                                    libs/joda-time-2.8.1.jar,
+                                    libs/commons-logging-1.2.jar,
+                                    libs/jackson-core-2.6.6.jar,
+                                    libs/log4j-1.2.17.jar,
+                                    libs/httpclient-4.5.2.jar,
+                                    libs/jackson-databind-2.6.6.jar
+                                    ''',
+                                    
+                                    
+                                   
                 
         )
     }
