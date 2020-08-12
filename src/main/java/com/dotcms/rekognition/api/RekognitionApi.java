@@ -106,7 +106,7 @@ public class RekognitionApi {
 
   private AWSCredentials credentials() {
 
-
+    // todo: from secrets
     String key = AWSPropertyBundle.getProperty("aws.key");
 
     String secret = AWSPropertyBundle.getProperty("aws.secret");

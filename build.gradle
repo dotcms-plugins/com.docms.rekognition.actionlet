@@ -19,7 +19,7 @@ configurations {
 
 dependencies {
     compile  ('com.amazonaws:aws-java-sdk-rekognition:1.11.84')
-    compile ('com.dotcms:dotcms:4.1.1'){ transitive = true }
+    compile ('com.dotcms:dotcms:5.3.5'){ transitive = true }
     compile 'junit:junit:4.12'
     osgiLibs ('com.amazonaws:aws-java-sdk-rekognition:1.11.84')
     osgiLibs ('log4j:log4j:1.2.17')
