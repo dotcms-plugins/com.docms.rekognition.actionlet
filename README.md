@@ -1,3 +1,11 @@
+# Merged into the core as of 5.2.7
+
+
+
+
+
+
+
 # AWS Rekognition Workflow Action for dotCMS
 
 This OSGi plugin provides support for Amazon's Rekognition AI engine to automatically tag images managed by dotCMS.  This actionlet can be added to any workflow step and if the content object being passed to the workflow has an binary image field and a tag field then it will automatically tag the image for the user.
